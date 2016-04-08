@@ -353,14 +353,19 @@ NSInteger const * KCDTransactionCountContext;
     [self queueAsyncTransaction:^(KCDObjectController *koala, dispatch_block_t finished) {
         NSMutableArray *sections = KCDMutableCopySectionsArray(_KCDSectionObjects);
         transaction(weakSelf, sections);
-        [koala updateSections:sections
-                    animation:animation
-                   completion:^{
-                       finished();
-                       if (completion) {
-                           completion(weakSelf);
-                       }
-                   }];
+        if ([sections isEqualToArray:_KCDSectionObjects]) {
+            finished();
+        }
+        else {
+            [koala updateSections:sections
+                        animation:animation
+                       completion:^{
+                           finished();
+                           if (completion) {
+                               completion(weakSelf);
+                           }
+                       }];
+        }
     }];
 }
 
