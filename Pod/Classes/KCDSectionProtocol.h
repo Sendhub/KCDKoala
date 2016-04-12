@@ -88,6 +88,14 @@
 
 - (void)enumerateObjectsUsingBlock:(void (^)(id<KCDObject> obj, NSUInteger idx, BOOL *stop))block;
 
+/** 
+ Performs a deep comparison of two section objects.
+ @return YES, if the sections have the same attributes, and contain the same objects; otherwise NO.
+ @param section The section against which this section will be compared.
+ */
+
+- (BOOL)isEqualToSection:(id<KCDSection>)section;
+
 @end
 
 @protocol KCDMutableSection <KCDSection>

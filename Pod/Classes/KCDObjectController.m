@@ -69,6 +69,10 @@ void KCDSortObjectsAndIndexPaths(NSArray ** objects, NSArray ** indexPaths);
 
 NSMutableArray * KCDMutableCopySectionsArray(NSArray *sectionObjects);
 
+/** Perform a deep comparison on two section arrays. */
+
+BOOL KCDSectionsAreEqual(NSArray <id<KCDSection>> *a, NSArray <id<KCDSection>> *b);
+
 @end
 
 #pragma mark - KCDObjectController Implementation -
@@ -353,7 +357,7 @@ NSInteger const * KCDTransactionCountContext;
     [self queueAsyncTransaction:^(KCDObjectController *koala, dispatch_block_t finished) {
         NSMutableArray *sections = KCDMutableCopySectionsArray(_KCDSectionObjects);
         transaction(weakSelf, sections);
-        if ([sections isEqualToArray:_KCDSectionObjects]) {
+        if (KCDSectionsAreEqual(sections, _KCDSectionObjects)) {
             finished();
         }
         else {
@@ -367,6 +371,21 @@ NSInteger const * KCDTransactionCountContext;
                        }];
         }
     }];
+}
+
+BOOL KCDSectionsAreEqual(NSArray <id<KCDSection>> *a, NSArray <id<KCDSection>> *b) {
+    if (![a isEqualToArray:b]) {
+        return NO;
+    }
+    for (NSInteger x = 0; x < a.count; x ++)
+    {
+        id <KCDSection> alpha = a[x];
+        id <KCDSection> beta = b[x];
+        if (![alpha isEqualToSection:beta]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - Sections -

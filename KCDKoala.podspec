@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KCDKoala"
-  s.version          = "0.8.9.9"
+  s.version          = "0.9.0.0"
   s.summary          = "An object manager for UITableView and UICollectionView."
   s.description      = <<-DESC
                        KCDKoala provides a simple, serialized interface for manipulating the contents of UICollectionView and UITableView instances through a storage class like interface.
